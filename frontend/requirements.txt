@@ -1,0 +1,21 @@
+# SmartHealth Frontend - Dependencias de Python
+
+# Framework Web
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Templates
+jinja2==3.1.2
+
+# CORS y Middleware
+python-multipart==0.0.6
+
+# Variables de entorno
+python-dotenv==1.0.0
+
+# Validación
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Utilidades
+aiofiles==23.2.1

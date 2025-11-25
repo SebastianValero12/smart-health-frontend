@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Chat - SmartHealth{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', path='/css/chat.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-small">
+                <svg width="32" height="32" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25 5C14.5 5 6 13.5 6 24C6 34.5 14.5 43 25 43C35.5 43 44 34.5 44 24C44 13.5 35.5 5 25 5Z" stroke="#4F46E5" stroke-width="2"/>
+                    <path d="M25 15V33M17 24H33" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h2>SmartHealth</h2>
+        </div>
+
+        <div class="user-info">
+            <div class="user-avatar">
+                <span id="userInitials">U</span>
+            </div>
+            <div class="user-details">
+                <p class="user-name" id="userName">Usuario</p>
+                <p class="user-email" id="userEmail">usuario@ejemplo.com</p>
+            </div>
+        </div>
+
+        <div class="new-chat-section">
+            <button class="btn btn-new-chat" id="newChatBtn">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M10 4V16M4 10H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Nueva Consulta
+            </button>
+        </div>
+
+        <div class="chat-history">
+            <h3>Historial</h3>
+            <div id="chatHistoryList" class="chat-history-list">
+                <!-- Las sesiones previas se cargarán aquí -->
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            <button class="btn-logout" id="logoutBtn">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M13 13L17 9M17 9L13 5M17 9H7M7 17H4C3.44772 17 3 16.5523 3 16V4C3 3.44772 3.44772 3 4 3H7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Cerrar Sesión
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Chat Area -->
+    <main class="chat-main">
+        <div class="chat-header">
+            <div class="chat-title">
+                <h1 id="chatTitle">Consulta Médica</h1>
+                <p class="chat-subtitle" id="chatSubtitle">Realiza consultas sobre información clínica de pacientes</p>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <!-- Welcome Message -->
+            <div class="welcome-message">
+                <div class="welcome-icon">
+                    <svg width="60" height="60" viewBox="0 0 50 50" fill="none">
+                        <path d="M25 5C14.5 5 6 13.5 6 24C6 34.5 14.5 43 25 43C35.5 43 44 34.5 44 24C44 13.5 35.5 5 25 5Z" stroke="#4F46E5" stroke-width="2"/>
+                        <path d="M25 15V33M17 24H33" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h2>¡Bienvenido a SmartHealth!</h2>
+                <p>Para comenzar, proporciona la información del paciente y tu consulta.</p>
+                <div class="welcome-tips">
+                    <div class="tip">
+                        <span class="tip-icon">📋</span>
+                        <span>Tipo y número de documento</span>
+                    </div>
+                    <div class="tip">
+                        <span class="tip-icon">💬</span>
+                        <span>Pregunta clara sobre el paciente</span>
+                    </div>
+                    <div class="tip">
+                        <span class="tip-icon">🤖</span>
+                        <span>IA basada en datos reales</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input-container">
+            <!-- Patient Info Form -->
+            <div class="patient-info-form" id="patientInfoForm">
+                <div class="form-row">
+                    <div class="form-group-inline">
+                        <label for="documentType">Tipo Doc.</label>
+                        <select id="documentType" name="documentType">
+                            <option value="1">CC</option>
+                            <option value="2">TI</option>
+                            <option value="3">CE</option>
+                            <option value="4">PA</option>
+                        </select>
+                    </div>
+                    <div class="form-group-inline flex-grow">
+                        <label for="documentNumber">Número de Documento</label>
+                        <input 
+                            type="text" 
+                            id="documentNumber" 
+                            name="documentNumber" 
+                            placeholder="1234567890"
+                            required
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="chat-input-wrapper">
+                <textarea 
+                    id="chatInput" 
+                    placeholder="¿Cuáles son las últimas citas médicas del paciente?"
+                    rows="1"
+                ></textarea>
+                <button class="btn-send" id="sendBtn" disabled>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='/js/chat.js') }}"></script>
+<script>
+    // Inicializar el chat
+    document.addEventListener('DOMContentLoaded', () => {
+        initChat();
+    });
+</script>
+{% endblock %}
